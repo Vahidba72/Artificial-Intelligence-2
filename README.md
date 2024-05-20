@@ -1,11 +1,6 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Mars Rover Project Description</title>
-</head>
-<body>
 
-<h1>Project Description</h1>
+
+<h1>Mars Rover PDDL Project</h1>
 
 <p>In the context of space exploration on Mars, a next-generation autonomous rover named MR-1 is tasked with conducting terrain analysis operations to collect scientific data. The rover is equipped with advanced sensors such as spectrometers, multispectral cameras, radar systems for analysis activities, and stereoscopic cameras and IMU for navigation and attitude control. MR-1 is designed to explore the Martian terrain and gather crucial mission information through a series of steps:</p>
 
@@ -19,24 +14,6 @@
     <li><strong>Data Transmission</strong>: After MR-1 has returned to its home base, it transmits the collected data back to Earth during suitable communication windows.</li>
 </ol>
 
-</body>
-</html>
-
-
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Mars Rover PDDL Project</title>
-</head>
-<body>
-
-<h1>Mars Rover PDDL Project</h1>
-
-<p>This project models a next-generation autonomous Mars rover named MR-1, designed to conduct terrain analysis operations to collect scientific data. The model is described using PDDL (Planning Domain Definition Language).</p>
-
-<h2>Project Overview</h2>
-
-<p>The MR-1 rover is tasked with exploring the Martian surface and collecting chemical information from different locations. The project includes a PDDL domain file and a problem file that define the actions the rover can perform, the initial state, and the goal state.</p>
 
 <h2>Domain Description</h2>
 
@@ -44,12 +21,12 @@
 
 <h3>Types</h3>
 <ul>
-    <li><code>location</code>: Represents different locations on Mars.</li>
+    <li><code>location</code>: Represents different sampling locations on Mars.</li>
     <li><code>manipulator</code>: Represents the rover's manipulator arm.</li>
     <li><code>instrument</code>: Represents scientific instruments (spectrometer, camera, radar).</li>
     <li><code>rover</code>: Represents the rover itself.</li>
-    <li><code>home</code>: Represents the home base.</li>
-    <li><code>configuration</code>: Represents configurations for the manipulator.</li>
+    <li><code>home</code>: Represents the home base or the mars station.</li>
+    <li><code>configuration</code>: Represents configurations for the manipulator at each location before sampling data.</li>
 </ul>
 
 <h3>Predicates</h3>
@@ -74,8 +51,8 @@
     <li><code>(not_data_processed ?l - location ?i - instrument)</code>: Data at location <code>?l</code> collected by instrument <code>?i</code> is not processed.</li>
     <li><code>(not_data_sent ?r - rover ?l - location ?i - instrument)</code>: Data at location <code>?l</code> collected by instrument <code>?i</code> by the rover <code>?r</code> is not sent.</li>
     <li><code>(data_sent ?r - rover ?l - location ?i - instrument)</code>: Data at location <code>?l</code> collected by instrument <code>?i</code> by the rover <code>?r</code> is sent.</li>
-    <li><code>(communication_closed)</code>: Communication is closed.</li>
-    <li><code>(communication_open)</code>: Communication is open.</li>
+    <li><code>(communication_closed)</code>: Communication to earth is closed.</li>
+    <li><code>(communication_open)</code>: Communication to earth is open.</li>
     <li><code>(config_for ?l - location ?c - configuration)</code>: Configuration <code>?c</code> is for location <code>?l</code>.</li>
     <li><code>(configured)</code>: The rover is configured.</li>
     <li><code>(not_configured)</code>: The rover is not configured.</li>
@@ -90,7 +67,7 @@
     <li><code>(untacked_number ?l - location)</code>: Number of times the manipulator has been untacked at location <code>?l</code>.</li>
     <li><code>(wait_steps)</code>: Number of time steps needed to establish communication.</li>
     <li><code>(number_sent)</code>: Number of data items sent.</li>
-    <li><code>(max_sent_data)</code>: Maximum number of data items to be sent.</li>
+    <li><code>(max_sent_data)</code>: Number of data items that needs to be sent.</li>
 </ul>
 
 <h3>Actions</h3>
@@ -126,64 +103,27 @@
     <li><code>config1 config2 config3</code>: Different configurations related to each location.</li>
 </ul>
 
-<h3>Initialization</h3>
+<h3>Problem sequencing</h3>
 <ul>
-    <li><code>(at_home)</code>: The rover starts at the home base.</li>
-    <li><code>(standing robot)</code>: The rover is initially standing.</li>
-    <li><code>(= (locs_visited) 0)</code>: No locations have been visited initially.</li>
-    <li><code>(= (max_locs_visited) 3)</code>: The rover must visit all three locations before returning to the home base.</li>
-    <li><code>(not_visited loc1) (not_visited loc2) (not_visited loc3)</code>: All locations are initially unvisited.</li>
-    <li><code>(not_deployed arm)</code>: The manipulator is not deployed initially.</li>
-    <li><code>(all_sensors_deactive)</code>: All sensors are deactivated initially.</li>
-    <li><code>(not_activated spectro) (not_activated camera) (not_activated radar)</code>: All sensors are not activated initially.</li>
-    <li><code>(not_data_collected loc1 spectro)</code>: No data collected at loc1 by spectro.</li>
-    <li><code>(not_data_collected loc2 camera)</code>: No data collected at loc2 by camera.</li>
-    <li><code>(not_data_collected loc2 radar)</code>: No data collected at loc2 by radar.</li>
-    <li><code>(not_data_collected loc3 camera)</code>: No data collected at loc3 by camera.</li>
-    <li><code>(not_data_processed loc1 spectro)</code>: Data at loc1 by spectro not processed.</li>
-    <li><code>(not_data_processed loc2 camera)</code>: Data at loc2 by camera not processed.</li>
-    <li><code>(not_data_processed loc2 radar)</code>: Data at loc2 by radar not processed.</li>
-    <li><code>(not_data_processed loc3 camera)</code>: Data at loc3 by camera not processed.</li>
-    <li><code>(not_data_sent robot loc1 spectro)</code>: Data at loc1 by spectro not sent.</li>
-    <li><code>(not_data_sent robot loc2 camera)</code>: Data at loc2 by camera not sent.</li>
-    <li><code>(not_data_sent robot loc2 radar)</code>: Data at loc2 by radar not sent.</li>
-    <li><code>(not_data_sent robot loc3 camera)</code>: Data at loc3 by camera not sent.</li>
-    <li><code>(= (untacked_number loc1) 0)</code>: Untacking count at loc1 is zero.</li>
-    <li><code>(= (untacked_number loc2) 0)</code>: Untacking count at loc2 is zero.</li>
-    <li><code>(= (untacked_number loc3) 0)</code>: Untacking count at loc3 is zero.</li>
-    <li><code>(need loc1 spectro)</code>: Spectro is needed at loc1.</li>
-    <li><code>(need loc2 camera)</code>: Camera is needed at loc2.</li>
-    <li><code>(need loc2 radar)</code>: Radar is needed at loc2.</li>
-    <li><code>(need loc3 camera)</code>: Camera is needed at loc3.</li>
-    <li><code>(= (number_read loc1 spectro) 0)</code>: Initial number of readings from spectro at loc1 is zero.</li>
-    <li><code>(= (max_read loc1 spectro) 2)</code>: Maximum readings needed from spectro at loc1 is two.</li>
-    <li><code>(= (number_read loc2 camera) 0)</code>: Initial number of readings from camera at loc2 is zero.</li>
-    <li><code>(= (max_read loc2 camera) 2)</code>: Maximum readings needed from camera at loc2 is two.</li>
-    <li><code>(= (number_read loc2 radar) 0)</code>: Initial number of readings from radar at loc2 is zero.</li>
-    <li><code>(= (max_read loc2 radar) 1)</code>: Maximum readings needed from radar at loc2 is one.</li>
-    <li><code>(= (number_read loc3 camera) 0)</code>: Initial number of readings from camera at loc3 is zero.</li>
-    <li><code>(= (max_read loc3 camera) 2)</code>: Maximum readings needed from camera at loc3 is two.</li>
-    <li><code>(= (wait_steps) 0)</code>: Initial number of steps waited for communication is zero.</li>
-    <li><code>(= (number_sent) 0)</code>: Initial number of data items sent is zero.</li>
-    <li><code>(= (max_sent_data) 4)</code>: Maximum number of data items to be sent is four.</li>
-    <li><code>(communication_closed)</code>: Communication is initially closed.</li>
-    <li><code>(config_for loc1 config1)</code>: Configuration 1 is for loc1.</li>
-    <li><code>(config_for loc2 config2)</code>: Configuration 2 is for loc2.</li>
-    <li><code>(config_for loc3 config3)</code>: Configuration 3 is for loc3.</li>
-    <li><code>(not_configured)</code>: The rover is not configured initially.</li>
-</ul>
-
-<h3>Goal</h3>
-
-<p>The goal is to ensure that data is collected, processed, and sent from all locations before communication is closed. Specifically:</p>
-<ul>
-    <li><code>(data_sent robot loc1 spectro)</code>: Data at loc1 collected by spectro is sent.</li>
-    <li><code>(data_sent robot loc2 camera)</code>: Data at loc2 collected by camera is sent.</li>
-    <li><code>(data_sent robot loc2 radar)</code>: Data at loc2 collected by radar is sent.</li>
-    <li><code>(data_sent robot loc3 camera)</code>: Data at loc3 collected by camera is sent.</li>
-    <li><code>(communication_closed)</code>: Communication is closed.</li>
-</ul>
-
+    The problem defined for this PDDL project and domain to be solved is as follows:
+    The rover is at home station initially and it's standing. There are three locations for the sampling which need to be visited. For loc1, spectro sensor must be used to collect data and the data should be read twice. For loc2 camera and radar are needed and the data for camera is collected twice and for radar it's only collected once. Also for loc3, camera data should be collected twice. The correct order of each data collection at each location is:
+    1 - move to the location
+    2 - sit 
+    3 - untack robot arm 
+    4 - configure the arm in the correct position
+    5 - activate the required sensor
+    6 - collect data with that sensor 
+    7 - deactivate the sensor 
+    8 - activate other sensors and repeat steps 5,6, and 7 if other sensors are needed for that special location.
+    9 - tack the robot arm
+    10 - process the gathered data
+    11 - stand up and move to next locations and gather data again
+    12 - after collecting all data get back to station
+    13 - establish communication for sending data (this takes for time steps and you should wait)
+    14 - send data
+    15 - close communication window
+    
+    
 <h3>Metric</h3>
 
 <p>Minimize the total time for the mission:</p>
