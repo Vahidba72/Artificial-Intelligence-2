@@ -1,6 +1,31 @@
 <!DOCTYPE html>
 <html>
 <head>
+    <title>Mars Rover Project Description</title>
+</head>
+<body>
+
+<h1>Project Description</h1>
+
+<p>In the context of space exploration on Mars, a next-generation autonomous rover named MR-1 is tasked with conducting terrain analysis operations to collect scientific data. The rover is equipped with advanced sensors such as spectrometers, multispectral cameras, radar systems for analysis activities, and stereoscopic cameras and IMU for navigation and attitude control. MR-1 is designed to explore the Martian terrain and gather crucial mission information through a series of steps:</p>
+
+<h2>Steps of the Mission</h2>
+<ol>
+    <li><strong>Navigation and Positioning</strong>: MR-1 uses its mobility system, cameras, and IMUs to navigate the Martian surface and maintain stability over varied terrain. It can move between predefined locations and position itself firmly for data collection.</li>
+    <li><strong>Deployment of Scientific Instruments</strong>: Upon reaching a designated location, MR-1 deploys its scientific instruments, such as spectrometers, cameras, and radar systems, to analyze various properties of the Martian surface including composition, topography, temperature, and humidity.</li>
+    <li><strong>Data Collection</strong>: MR-1 activates the scientific instruments on its manipulator’s end-effector to collect data. The specific instruments used depend on the location, and MR-1 collects data such as surface composition and subsurface features.</li>
+    <li><strong>Data Processing</strong>: The raw data collected by the scientific instruments are processed partly onboard the rover and partly by transferring it to Earth. The data analysis algorithms are activated based on the instruments used and the locations visited.</li>
+    <li><strong>Decision Making</strong>: MR-1 may need to perform specific readings multiple times in certain locations based on the performance of the instruments and the location-specific requirements.</li>
+    <li><strong>Data Transmission</strong>: After MR-1 has returned to its home base, it transmits the collected data back to Earth during suitable communication windows.</li>
+</ol>
+
+</body>
+</html>
+
+
+<!DOCTYPE html>
+<html>
+<head>
     <title>Mars Rover PDDL Project</title>
 </head>
 <body>
