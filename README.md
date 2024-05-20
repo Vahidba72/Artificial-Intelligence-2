@@ -14,7 +14,8 @@
     <li><strong>Data Transmission</strong>: After MR-1 has returned to its home base, it transmits the collected data back to Earth during suitable communication windows.</li>
 </ol>
 
-
+<h2>Code execution</h2>
+The code for the domain and the problem are written using the online planner <a href="https://editor.planning.domains/#">https://editor.planning.domains/#</a>. The solver used to generate the sequential actions for the problem which will be defined is <strong>OPTIC (Optimising Preferences and Time-Dependant Costs)</strong>. In this solver negative preconditions are not supported but usage of functions are allowed. Consequently, no negative precondition is used in writing the code of the PDDL. 
 <h2>Domain Description</h2>
 
 <p>The domain file (<code>Mars_Domain.pddl</code>) defines the types, predicates, functions, and actions relevant to the rover's operations.</p>
@@ -107,29 +108,80 @@
 <ul>
     The problem defined for this PDDL project and domain to be solved is as follows:
     The rover is at home station initially and it's standing. There are three locations for the sampling which need to be visited. For loc1, spectro sensor must be used to collect data and the data should be read twice. For loc2 camera and radar are needed and the data for camera is collected twice and for radar it's only collected once. Also for loc3, camera data should be collected twice. The correct order of each data collection at each location is:
-    1 - move to the location
-    2 - sit 
-    3 - untack robot arm 
-    4 - configure the arm in the correct position
-    5 - activate the required sensor
-    6 - collect data with that sensor 
-    7 - deactivate the sensor 
-    8 - activate other sensors and repeat steps 5,6, and 7 if other sensors are needed for that special location.
-    9 - tack the robot arm
-    10 - process the gathered data
-    11 - stand up and move to next locations and gather data again
-    12 - after collecting all data get back to station
-    13 - establish communication for sending data (this takes for time steps and you should wait)
-    14 - send data
-    15 - close communication window
-    
-    
-<h3>Metric</h3>
 
-<p>Minimize the total time for the mission:</p>
-<ul>
-    <li><code>(:metric minimize (total-time))</code></li>
-</ul>
+<ol>
+    <li>Move to the location</li>
+    <li>Sit</li>
+    <li>Untack robot arm</li>
+    <li>Configure the arm in the correct position</li>
+    <li>Activate the required sensor</li>
+    <li>Collect data with that sensor</li>
+    <li>Deactivate the sensor</li>
+    <li>Activate other sensors and repeat steps 5, 6, and 7 if other sensors are needed for that special location.</li>
+    <li>Tack the robot arm</li>
+    <li>Process the gathered data</li>
+    <li>Stand up and move to next locations and gather data again</li>
+    <li>After collecting all data, get back to station</li>
+    <li>Establish communication for sending data (this takes four time steps and you should wait)</li>
+    <li>Send data</li>
+    <li>Close communication window</li>
+</ol>
+    
+    
+<h3>Results</h3>
+The output of the solver if executed correctly is as followed:
+
+<pre>
+0.000: (home_out robot loc3)  [0.001]
+0.001: (sit robot)  [0.001]
+0.002: (untack robot arm loc3)  [0.001]
+0.003: (arm_configure robot arm loc3 config3)  [0.001]
+0.004: (activate_inst robot loc3 arm camera)  [0.001]
+0.005: (collect_data robot loc3 arm camera)  [0.001]
+0.006: (collect_data robot loc3 arm camera)  [0.001]
+0.007: (deactivate_inst robot loc3 arm camera)  [0.001]
+0.008: (tack robot arm loc3)  [0.001]
+0.009: (process_data robot loc3 arm camera)  [0.001]
+0.009: (stand_up robot arm)  [0.001]
+0.010: (move robot loc3 loc2)  [0.001]
+0.011: (sit robot)  [0.001]
+0.012: (untack robot arm loc2)  [0.001]
+0.013: (arm_configure robot arm loc2 config2)  [0.001]
+0.014: (activate_inst robot loc2 arm radar)  [0.001]
+0.015: (collect_data robot loc2 arm radar)  [0.001]
+0.016: (deactivate_inst robot loc2 arm radar)  [0.001]
+0.017: (activate_inst robot loc2 arm camera)  [0.001]
+0.018: (collect_data robot loc2 arm camera)  [0.001]
+0.019: (collect_data robot loc2 arm camera)  [0.001]
+0.020: (deactivate_inst robot loc2 arm camera)  [0.001]
+0.021: (tack robot arm loc2)  [0.001]
+0.022: (process_data robot loc2 arm radar)  [0.001]
+0.022: (process_data robot loc2 arm camera)  [0.001]
+0.022: (stand_up robot arm)  [0.001]
+0.023: (move robot loc2 loc1)  [0.001]
+0.024: (sit robot)  [0.001]
+0.025: (untack robot arm loc1)  [0.001]
+0.026: (arm_configure robot arm loc1 config1)  [0.001]
+0.027: (activate_inst robot loc1 arm spectro)  [0.001]
+0.028: (collect_data robot loc1 arm spectro)  [0.001]
+0.029: (collect_data robot loc1 arm spectro)  [0.001]
+0.030: (deactivate_inst robot loc1 arm spectro)  [0.001]
+0.031: (tack robot arm loc1)  [0.001]
+0.032: (process_data robot loc1 arm spectro)  [0.001]
+0.032: (stand_up robot arm)  [0.001]
+0.033: (back_home robot loc1)  [0.001]
+0.034: (sit robot)  [0.001]
+0.035: (wait_for_communication robot)  [0.001]
+0.036: (wait_for_communication robot)  [0.001]
+0.037: (wait_for_communication robot)  [0.001]
+0.038: (wait_for_communication robot)  [0.001]
+0.039: (open_communication robot)  [0.001]
+0.040: (send_data robot loc1 spectro)  [0.001]
+0.041: (send_data robot loc2 radar)  [0.001]
+0.042: (send_data robot loc3 camera)  [0.001]
+0.043: (send_data robot loc2 camera)  [0.001]
+0.044: (close_communication robot)  [0.001]
+</pre>
 
 </body>
 </html>
